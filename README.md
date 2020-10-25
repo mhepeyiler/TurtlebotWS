@@ -49,3 +49,14 @@ rosrun turtlebot_ws turtlebot_ws_move_robot
 or via `roslaunch`
 
 `roslaunch turtlebot_ws keystroke.launch`
+
+## Parameterized Tele-op Move
+
+Keyboard layout same. Move parameter has been added. Default parameters are equal to 0.1 for both linear and angular.
+
+```
+rosrun turtlebot_ws turtlebot_ws_keystroke
+rosrun turtlebot_ws turtlebot_ws_move_robot _linear:=0.5 _angular:=0.5
+```
+
+`roslaunch turtlebot_ws keystroke.launch linear:=0.5 angular:=0.5`

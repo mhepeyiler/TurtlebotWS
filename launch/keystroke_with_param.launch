@@ -1,0 +1,9 @@
+<launch>
+    <arg name="linear" default="0.1"/>
+    <arg name="angular" default="0.1"/>
+    <node pkg="turtlebot_ws" type="turtlebot_ws_move_robot_param" name="move_robot">
+        <param name="linear" type="double" value="$(arg linear)" />
+        <param name="angular" type="double" value="$(arg angular)" />
+    </node>
+    <node pkg="turtlebot_ws" type="turtlebot_ws_keystroke" name="keystroke"/>
+</launch>
