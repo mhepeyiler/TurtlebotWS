@@ -1,0 +1,6 @@
+<launch>
+    
+    <node pkg="turtlebot_ws" type="turtlebot_ws_keystroke" name="keystroke"/>
+    <node pkg="turtlebot_ws" type="turtlebot_ws_move_robot" name="move_robot"/>
+
+</launch>
