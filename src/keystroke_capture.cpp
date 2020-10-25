@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     
     ros::init(argc, argv, "key_stroke");
     ros::NodeHandle n;
-    ros::Publisher pub = n.advertise<std_msgs::String>("/key_stroke", 1000);
+    const ros::Publisher pub = n.advertise<std_msgs::String>("/key_stroke", 1000);
 
     ros::Rate loop_rate(10);
 
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 
         if(input == 'i')
             return 0;
-            
+
         std_msgs::String msg;
         msg.data = input;
         pub.publish(msg);

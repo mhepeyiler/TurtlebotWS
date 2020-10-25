@@ -11,7 +11,7 @@
 class RobotControl
 {
 public:
-    explicit RobotControl(const ros::Publisher& pub) : mpub{pub}
+    RobotControl(const ros::Publisher& pub, const ros::Rate& rate) : mpub{pub}, mrate{rate} 
     {
         mtwist.linear.x = 0;
         mtwist.angular.z = 0;
@@ -24,9 +24,16 @@ public:
         mpub.publish(mtwist);
     }
 
+    void run()const
+    {
+        ros::spinOnce();
+        mrate.sleep();
+    }
+
 private:
 
     const ros::Publisher& mpub;
+    const ros::Rate& mrate;
     geometry_msgs::Twist mtwist;
 
     using map_str_arr = std::map<std::string, std::array<double,2>>;
@@ -44,7 +51,12 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "control_robot");
     ros::NodeHandle n;
     const ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
-    RobotControl rob(pub);
+    ros::Rate sleep_rate(10);
+    RobotControl rob(pub, sleep_rate);
     const ros::Subscriber sub = n.subscribe<std_msgs::String>("/key_stroke", 1000, &RobotControl::KeyFB, &rob);
-    ros::spin();
+    
+    while(ros::ok())
+    {
+        rob.run();
+    }
 }

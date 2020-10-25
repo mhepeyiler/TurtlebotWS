@@ -13,21 +13,20 @@
 #include <functional>
 #include <algorithm>
 #include <numeric>
-
+#include <iterator>
 
 std::vector<float> dist;
 bool flag = false;
 float angle_inc{};
+
 /*
     Debug purpose 
 */
-std::ostream& operator<<(std::ostream& os, const std::vector<float>& data)
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& data)
 {
     os << "[";
-    for(const auto& val : data)
-    {
-        os << val << ' ';
-    }
+    copy(data.cbegin(), data.cend(), std::ostream_iterator<T>(os, " "));
     os << "]\n";
     return os;
 }
@@ -38,16 +37,19 @@ void SensorFB(const sensor_msgs::LaserScan& msg)
     flag = true;
     angle_inc = msg.angle_increment;
     dist.resize(msg.ranges.size());
+    
     transform(msg.ranges.cbegin(), msg.ranges.cend(), dist.begin(), [&msg](const auto& val) {return std::isinf(val) ? msg.range_max : val;});
+    std::cout << dist;
+
 }
 
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "avoid_obstacle");
     ros::NodeHandle n;
-    ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
+    const ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
 
-    ros::Subscriber sub = n.subscribe("/scan", 1000, SensorFB);
+    const ros::Subscriber sub = n.subscribe("/scan", 1000, SensorFB);
     
     ros::Rate loop_rate(10);
 
