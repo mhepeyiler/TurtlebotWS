@@ -139,6 +139,8 @@ include_directories(
 add_executable(${PROJECT_NAME}_avoid_obstacle src/avoid_obstacle.cpp)
 add_executable(${PROJECT_NAME}_keystroke src/keystroke_capture.cpp)
 add_executable(${PROJECT_NAME}_move_robot src/move_robot.cpp)
+add_executable(${PROJECT_NAME}_move_robot_param src/move_robot_with_param.cpp)
+add_executable(${PROJECT_NAME}_move_robot_ramp src/move_robot_with_ramp.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -160,6 +162,14 @@ target_link_libraries(${PROJECT_NAME}_keystroke
 )
 
 target_link_libraries(${PROJECT_NAME}_move_robot
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_move_robot_param
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_move_robot_ramp
   ${catkin_LIBRARIES}
 )
 
