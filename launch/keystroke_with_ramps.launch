@@ -1,0 +1,13 @@
+<launch>
+    <arg name="vel_linear" default="0.1"/>
+    <arg name="vel_angular" default="0.1"/>
+    <arg name="ramps_linear" default="0.1"/>
+    <arg name="ramps_angular" default="0.1"/>
+    <node pkg="turtlebot_ws" type="turtlebot_ws_move_robot_ramp" name="move_robot">
+        <param name="vel_linear" type="double" value="$(arg vel_linear)" />
+        <param name="vel_angular" type="double" value="$(arg vel_angular)" />
+        <param name="ramps_linear" type="double" value="$(arg ramps_linear)" />
+        <param name="ramps_angular" type="double" value="$(arg ramps_angular)" />
+    </node>
+    <node pkg="turtlebot_ws" type="turtlebot_ws_keystroke" name="keystroke"/>
+</launch>
